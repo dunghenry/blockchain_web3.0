@@ -1,27 +1,33 @@
 export const state = () => ({
-    todos: []
+    todos: [],
+    todo: null
 })
 export const getters = {
     getTodos(state) {
-      return state.todos
-    }
-  }
+        return state.todos
+    },
+}
 
 export const mutations = {
-    add(state, text) {
-        state.list.push({
-            text,
-            done: false
-        })
+    SET_TODOS(state, payload) {
+        state.todos = payload
     },
-    remove(state, { todo }) {
-        state.list.splice(state.list.indexOf(todo), 1)
-    },
-    toggle(state, todo) {
-        todo.done = !todo.done
+    SET_TODO(state, payload) {
+        state.todo = payload
     }
 }
 
 export const actions = {
-
+    async setTodos({ commit }) {
+        try {
+            const data = await this.$axios.$get("https://jsonplaceholder.typicode.com/todos?_limit=5")
+            commit('SET_TODOS', data)
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    async getTodoById({commit}, id){
+        const data = await this.$axios.$get(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        commit('SET_TODO', data);
+    }
 }

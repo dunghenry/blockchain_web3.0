@@ -1,19 +1,24 @@
 <template>
   <div>
-  <!-- {{getCounter}}
-  <button v-on:click="increment">Increment</button> -->
-  <!-- <TodoListVue/> -->
-  <button v-on:click="getTodos">Get Todos</button>
+    <TodoListVue :todos="todos" />
   </div>
 </template>
 
 <script>
 import TodoListVue from '../components/TodoList.vue';
-import { mapGetters, mapMutations, mapActions} from 'vuex';
+import { mapGetters, mapActions, mapMutations, mapState} from 'vuex';
 export default {
   name: 'IndexPage',
   components: {TodoListVue},
-  computed: {...mapGetters(['getCounter'])},
-  methods: {...mapMutations(['increment', 'GET_TODOS']), ...mapActions(['getTodos'])},
+  created(){
+    this.setTodos()
+  },
+  // computed:{
+  //   todos(){
+  //     return this.$store.state.todos
+  //   }
+  // },
+  computed: {...mapGetters("todos", ['getTodos']), ...mapState("todos", ["todos"])},
+  methods: {...mapMutations("todos", []), ...mapActions("todos", ['setTodos'])},
 }
 </script>
