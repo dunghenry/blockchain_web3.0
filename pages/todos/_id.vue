@@ -1,5 +1,7 @@
 <template>
-  <h1>Todo Detail</h1>
+  <div>
+    <h1>Todo Detail Page</h1>
+  </div>
 </template>
 
 <script>
